@@ -78,6 +78,7 @@ new_savedate-time: 0.10895490646362305 seconds
 new_Fulltime: 0.40103673934936523 seconds
 ```
 Additionally, an image will be generated.
+
 <img src="Pattern1.png" alt="result" width="500">
 
 ## Contact

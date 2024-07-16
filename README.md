@@ -22,6 +22,7 @@ It can also identify the most optimized sowing methods for reference.
 ## Installation
 
 Ensure that Python and Git are installed.
+A virtual environment is a recommended option, but it is not mandatory.
 ```bash
 # Clone the repository
 git clone https://github.com/CarrQuin/Sowing-planning.git

@@ -42,7 +42,7 @@ pip install -r requirements.txt.
 ## Usage 
 
 As a user, you only need to use the file "Aussaatplanung_script.py". In the variable section, 
-you can input the variables you want to control and specify the file type for saving. 
+you can input the variables you want to control and specify the file type for saving.  
 You can also choose to enable optimization mode, which may take more time.
 
 You can also run it once with the default variables to see the actual effect.
@@ -53,4 +53,3 @@ Click "Run Python File" on the right side of the title bar to run the current fi
 If you encounter any problems while using it, feel free to contact me.
 
  * Email: k.qian@tu-braunschweig.de
- * Matrikel-Nr.: 5125331

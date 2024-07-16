@@ -2,6 +2,7 @@
 Last modification date: 22.05.2024
 Description: Rotate the polygon within the grid 
              to find the arrangement that contains the most points.
+<Notes>: This method will take more time.
 E-mail: k.qian@tu-braunschweig.de
 Autor: Kaiyu Qian
 '''

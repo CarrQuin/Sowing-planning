@@ -20,7 +20,7 @@ kml_file_path = r"KML-Dateien\feld 1.kml"
 # Whether to save the results in CSV format, with an alternative KML
 save_as_csv = True
 #Spacing between adjacent seeds, in [m]
-distance = 0.35
+distance = 3.5
 # Whether to use an optimization algorithm.
 optimal = False
 # (OPT)Number of displacement optimization iterations.(Up to a max. of 100.)

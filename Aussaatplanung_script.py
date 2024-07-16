@@ -13,7 +13,6 @@ from Save_Data import save_date_kml, save_date_csv
 from coords_kml import extract_coordinates_kml
 from coords_transformation import utm_to_geo_points, geo_to_utm, get_utm_zone
 import time
-import matplotlib.pyplot as plt
 # =====Variables=====
 # File path to read.
 kml_file_path = r"KML-Dateien\feld 1.kml"
@@ -62,13 +61,15 @@ print(f'new_transback-time: {test3_time - test2_time} seconds')
 print(f'new_savedate-time: {end_time - test3_time} seconds')
 print(f'new_Fulltime: {end_time - start_time} seconds')
 # =====Plot=====
-plt.figure('Pattern1')
+import matplotlib.pyplot as plt
+import pathlib
+plt.figure(pathlib.Path(kml_file_path).stem)
 plt.plot(*outside_polygon.exterior.xy)
 plt.plot(*inside_polygon.exterior.xy)
 x_coords = [point.x for point in points_all]
 y_coords = [point.y for point in points_all]
 plt.scatter(x_coords, y_coords, color='red')
-plt.title('pattern seeds')
+plt.title(pathlib.Path(kml_file_path).name)
 plt.grid()
 plt.axis('equal')
 plt.show()

@@ -48,9 +48,9 @@ def new_coordsys(polygon, edge=False):
     '''
     return mbr, point, x_vec
 # Test
-from shapely.geometry import Polygon
-import matplotlib.pyplot as plt
 if __name__ == '__main__':
+    from shapely.geometry import Polygon
+    import matplotlib.pyplot as plt
     polygon = Polygon([(10, -60), (60, -80), (50, 90), (20, 130), (-5, 40)])
     mbr, point, x_vecc = new_coordsys(polygon)
     print('mbr:', mbr)

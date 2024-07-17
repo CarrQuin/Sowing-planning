@@ -73,12 +73,12 @@ def tri_pattern(mbr, i, v_x, polygon, distance):
         largest_multiple = (np.linalg.norm(p_min - y1) // distance + 1) * distance
         # Move the starting point when changing rows
         if even_row: 
-            x = y1 +largest_multiple * v_x
+            x = np.array(y1 +largest_multiple * v_x)
         else:
-            x = y1 + (-(distance / 2) + largest_multiple) * v_x
+            x = np.array(y1 + (-(distance / 2) + largest_multiple) * v_x)
             # Prevent points from overflowing outside the polygon
             if not polygon.contains(Point(x)):
-                x = y1 + ((distance / 2) + largest_multiple) * v_x
+                x = np.array(y1 + ((distance / 2) + largest_multiple) * v_x)
         # Record a point at regular intervals along the same row
         while np.linalg.norm(x - y1) <= np.linalg.norm(p_max - y1):
             point = Point(x)
@@ -102,7 +102,7 @@ if __name__ == '__main__':
     from shapely.geometry import Polygon
     from New_Coordsys import new_coordsys
     polygon = Polygon([(0, 0), (1200, 100), (900, 700), (200, 800)])
-    distance = 2.5
+    distance = 1
     mbr, i, v_x = new_coordsys(polygon)
     #print('input',mbr.exterior.coords[i], v_x)
     start_time = time.time()

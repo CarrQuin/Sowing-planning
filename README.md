@@ -45,6 +45,8 @@ As a user, you only need to use the file "Aussaatplanung_script.py". In the vari
 you can input the variables you want to control and specify the file type for saving.  
 You can also choose to enable optimization mode, which may take more time.
 
+For now, adding a graphical user interface is not being considered.
+
 ```python
 # =====Variables=====
 # File path to read.

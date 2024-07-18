@@ -17,19 +17,12 @@ import configparser
 # =====Variables=====
 config = configparser.ConfigParser()
 config.read('config.ini')
-# File path to read.
 kml_file_path = config.get('path', 'kml_file_path')
-# Whether to save the results in CSV format, with an alternative KML
 save_as_csv = config.getboolean('settings', 'save_as_csv')
-#S pacing between adjacent seeds, in [m]
 distance = config.getfloat('variables', 'distance')
-# Width of the boundary region, in[m]
 edge_width = config.getfloat('variables', 'edge_width')
-# Whether to use an optimization algorithm.
 optimal = config.getboolean('settings', 'optimal')
-# (OPT)Number of displacement optimization iterations.(Up to a max. of 100.)
 move_iter = config.getint('variables', 'move_iter')
-# (OPT)Number of displacement optimization iterations.(Up to a max. of 60.)
 angle_iter = config.getint('variables', 'angle_iter')
 # =====main=====
 # Abstract geometric information from geographic coordinates
@@ -37,7 +30,6 @@ start_time = time.time()# T0 start <<<
 coords_geo = extract_coordinates_kml(kml_file_path)
 utm_zone = get_utm_zone(coords_geo)
 coords = geo_to_utm(coords_geo, utm_zone)
-# coords = [(0, 0), (1200, 100), (900, 700), (200, 800)] # For test
 outside_polygon, inside_polygon = new_edge(coords, edge_width)
 test1_time = time.time()# T1 trans to <<<
 # Arrange seeds within the interior area

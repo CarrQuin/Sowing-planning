@@ -6,13 +6,13 @@ Autor: Kaiyu Qian
 '''
 import numpy as np
 import shapely
-def new_edge(vertices, distance):
+def new_edge(vertices, width):
     '''input format: vertices = List, the outside boundary
                      distance = value, size of every two adjacent points
     '''    
     polygon_out = shapely.geometry.Polygon(vertices)
     # Use buffer function to shrink the polygon
-    polygon_in = polygon_out.buffer(-(np.sqrt(3) * 3)*distance, join_style = 2)
+    polygon_in = polygon_out.buffer(-width, join_style = 2)
     # Ensure that all vertices are stored in a ccw order
     polygon_out = shapely.geometry.polygon.orient(polygon_out)
     polygon_in = shapely.geometry.polygon.orient(polygon_in)

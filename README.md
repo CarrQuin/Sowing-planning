@@ -40,36 +40,26 @@ pip install -r requirements.txt.
 ```
 
 ## Usage 
-
-As a user, you only need to use the file "Aussaatplanung_script.py". In the variable section, 
-you can input the variables you want to control and specify the file type for saving.  
-You can also choose to enable optimization mode, which may take more time.
-
 For now, adding a graphical user interface is not being considered.
 
-```python
-# =====Variables=====
-# File path to read.
-kml_file_path = r"KML-Dateien\feld 1.kml"
-# Whether to save the results in CSV format, with an alternative KML
-save_as_csv = True
-#Spacing between adjacent seeds, in [m]
-distance = 3.5
-# Whether to use an optimization algorithm.
-optimal = False
-# (OPT)Number of displacement optimization iterations.(Up to a max. of 100.)
-move_iter = 5
-# (OPT)Number of displacement optimization iterations.(Up to a max. of 60.)
-angle_iter = 6
+Before using the script, please ensure that the parameters are set correctly.  
+All necessary input parameters are stored in the file "config.ini", as shown in the example below:
+
+```ini
+[path]
+; File path to read.
+kml_file_path = KML-Dateien\feld 1.kml
 ```
 
 When setting parameters, please note the following:
+ * Do not add quotes ("") before and after the file path, and do not input 'r' before the path.
  * The plot should preferably not have rounded corners at the boundary vertices.
  * The outline of the plot to be sown should preferably not be a concave polygon.
+ * Do not set an excessively large boundary width for the plot.
 
-You can also run it once with the default variables to see the actual effect.
+After setting all the parameters, if you want to see the results, you can open and run the file "Aussaatplanung_script.py" to view them.  
 Click "Run Python File" on the right side of the title bar to run the current file.  
-Under the above conditions, the following results can be expected:
+Under the default variables, the following results can be expected:
 ```bash
 The new total points: 12097
 D:\Path\to\your\project\Sowing-planning\Koordinaten_Saatpunkte.csv

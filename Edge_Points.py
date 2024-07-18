@@ -33,11 +33,12 @@ if __name__ == '__main__':
     from New_Edge import new_edge
     kml_file_path = r"KML-Dateien\test.kml"
     distance = 0.35
+    width = 1.8
     coords_geo = extract_coordinates_kml(kml_file_path)
     utm_zone = get_utm_zone(coords_geo)
     coords = geo_to_utm(coords_geo, utm_zone)
     #coords = [(0, 0), (120, 10), (90, 70), (20, 80)]
-    polygon_out, polygon_in = new_edge(coords, distance)
+    polygon_out, polygon_in = new_edge(coords, width)
     points = edge_points(polygon_out, polygon_in, distance)
     # Create a plot
     plt.figure('Pattern2')

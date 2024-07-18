@@ -13,19 +13,24 @@ from Save_Data import save_date_kml, save_date_csv
 from coords_kml import extract_coordinates_kml
 from coords_transformation import utm_to_geo_points, geo_to_utm, get_utm_zone
 import time
+import configparser
 # =====Variables=====
+config = configparser.ConfigParser()
+config.read('config.ini')
 # File path to read.
-kml_file_path = r"KML-Dateien\feld 1.kml"
+kml_file_path = config.get('path', 'kml_file_path')
 # Whether to save the results in CSV format, with an alternative KML
-save_as_csv = True
-#Spacing between adjacent seeds, in [m]
-distance = 3.5
+save_as_csv = config.getboolean('settings', 'save_as_csv')
+#S pacing between adjacent seeds, in [m]
+distance = config.getfloat('variables', 'distance')
+# Width of the boundary region, in[m]
+edge_width = config.getfloat('variables', 'edge_width')
 # Whether to use an optimization algorithm.
-optimal = False
+optimal = config.getboolean('settings', 'optimal')
 # (OPT)Number of displacement optimization iterations.(Up to a max. of 100.)
-move_iter = 5
+move_iter = config.getint('variables', 'move_iter')
 # (OPT)Number of displacement optimization iterations.(Up to a max. of 60.)
-angle_iter = 6
+angle_iter = config.getint('variables', 'angle_iter')
 # =====main=====
 # Abstract geometric information from geographic coordinates
 start_time = time.time()# T0 start <<<
@@ -33,7 +38,7 @@ coords_geo = extract_coordinates_kml(kml_file_path)
 utm_zone = get_utm_zone(coords_geo)
 coords = geo_to_utm(coords_geo, utm_zone)
 # coords = [(0, 0), (1200, 100), (900, 700), (200, 800)] # For test
-outside_polygon, inside_polygon = new_edge(coords, distance)
+outside_polygon, inside_polygon = new_edge(coords, edge_width)
 test1_time = time.time()# T1 trans to <<<
 # Arrange seeds within the interior area
 if optimal:
@@ -54,22 +59,24 @@ if save_as_csv:
 else:
     print(save_date_kml(points_geo))
 end_time = time.time()# T4 end <<<
-# =====Elapsed Time=====
-print(f'new_Transto-time: {test1_time - start_time} seconds')
-print(f'new_Pattern-time: {test2_time - test1_time} seconds')
-print(f'new_transback-time: {test3_time - test2_time} seconds')
-print(f'new_savedate-time: {end_time - test3_time} seconds')
-print(f'new_Fulltime: {end_time - start_time} seconds')
-# =====Plot=====
-import matplotlib.pyplot as plt
-import pathlib
-plt.figure(pathlib.Path(kml_file_path).stem)
-plt.plot(*outside_polygon.exterior.xy)
-plt.plot(*inside_polygon.exterior.xy)
-x_coords = [point.x for point in points_all]
-y_coords = [point.y for point in points_all]
-plt.scatter(x_coords, y_coords, color='red')
-plt.title(pathlib.Path(kml_file_path).name)
-plt.grid()
-plt.axis('equal')
-plt.show()
+# Test
+if __name__ == '__main__':
+    # =====Elapsed Time=====
+    print(f'new_Transto-time: {test1_time - start_time} seconds')
+    print(f'new_Pattern-time: {test2_time - test1_time} seconds')
+    print(f'new_transback-time: {test3_time - test2_time} seconds')
+    print(f'new_savedate-time: {end_time - test3_time} seconds')
+    print(f'new_Fulltime: {end_time - start_time} seconds')
+    # =====Plot=====
+    import matplotlib.pyplot as plt
+    import pathlib
+    plt.figure(pathlib.Path(kml_file_path).stem)
+    plt.plot(*outside_polygon.exterior.xy)
+    plt.plot(*inside_polygon.exterior.xy)
+    x_coords = [point.x for point in points_all]
+    y_coords = [point.y for point in points_all]
+    plt.scatter(x_coords, y_coords, color='red')
+    plt.title(pathlib.Path(kml_file_path).name)
+    plt.grid()
+    plt.axis('equal')
+    plt.show()

@@ -15,7 +15,7 @@ The purpose of this project is to simulate seed sowing on a plot, enabling drone
 ## Introduction
 
 This is a project designed to simulate equilateral triangle sowing in a plot. 
-It serves as a bachelor's thesis and is part of the "Spot farming – an alternative for future plant production" project. 
+It serves as a bachelor's thesis and is part of the project "Spot farming – an alternative for future plant production". 
 The project enables the division and sowing of plots to accommodate the characteristics of drone sowing. 
 It can also identify the most optimized sowing methods for reference. 
 

@@ -69,6 +69,7 @@ new_transback-time: 0.16195344924926758 seconds
 new_savedate-time: 0.10895490646362305 seconds
 new_Fulltime: 0.40103673934936523 seconds
 ```
+All calculated coordinates of the points will be saved in the file "Koordinaten_Saatpunkte". The format of the file can be either CSV or KML, based on the settings.  
 Additionally, an image will be generated.
 
 <img src="Pattern1.png" alt="result" width="500">

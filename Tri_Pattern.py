@@ -6,13 +6,13 @@ E-mail: k.qian@tu-braunschweig.de
 Autor: Kaiyu Qian
 '''
 import numpy as np
-from shapely.geometry import Point, LineString
-def tri_pattern(mbr, i, v_x, polygon, distance):
-    '''input format: mbr = class Polygon, minimum bounding rectangle
+import shapely
+def tri_pattern(mbr, i: int, v_x, polygon, distance: float):
+    '''input format: mbr = class Polygon, the minimum bounding rectangle
                      i = value, the vertex index of origin
-                     v_x = func Array, 
-                     polygon = class Polygon, 
-                     distance = value, size of every two adjacent points
+                     v_x = func Array, the vector that will be used as the x-axis
+                     polygon = class Polygon, the field polygon
+                     distance = value, the size of every two adjacent seeds
     '''
     # Translate polygon vertices and remove duplicates
     mbr_vertices = np.array(mbr.exterior.coords[:-1])
@@ -37,7 +37,7 @@ def tri_pattern(mbr, i, v_x, polygon, distance):
     # Pattern loop
     while np.linalg.norm(y1 - m0) <= np.linalg.norm(m3 - m0):
         # Determine the rows of points to be arranged
-        line = LineString([y1, y2])
+        line = shapely.geometry.LineString([y1, y2])
         #Calculate the range of points that need to be arranged
         intersections = line.intersection(exterior)
         # Determine the type of intersection points to prevent critical errors
@@ -77,11 +77,11 @@ def tri_pattern(mbr, i, v_x, polygon, distance):
         else:
             x = np.array(y1 + (-(distance / 2) + largest_multiple) * v_x)
             # Prevent points from overflowing outside the polygon
-            if not polygon.contains(Point(x)):
+            if not polygon.contains(shapely.geometry.Point(x)):
                 x = np.array(y1 + ((distance / 2) + largest_multiple) * v_x)
         # Record a point at regular intervals along the same row
         while np.linalg.norm(x - y1) <= np.linalg.norm(p_max - y1):
-            point = Point(x)
+            point = shapely.geometry.Point(x)
             points.append(point)
             x += move_x
         # Move one row spacing each time a new row is started
@@ -90,18 +90,17 @@ def tri_pattern(mbr, i, v_x, polygon, distance):
         even_row = not even_row
     # Error troubleshooting module
     if error_count > 0:
-        print(error_count, 'errors occurred with type', intersections.geom_type)
+        print(error_count, 'errors occurred with type ', intersections.geom_type)
         print('The erroneous graph: ', polygon)
-    '''output format: points = List of class Point, '''
+    '''output format: points = List of class Point, the coordinates of the seeds calculated from the sowing'''
     return points
 
 # Test
 if __name__ == '__main__':
     import time
     import matplotlib.pyplot as plt
-    from shapely.geometry import Polygon
     from New_Coordsys import new_coordsys
-    polygon = Polygon([(0, 0), (1200, 100), (900, 700), (200, 800)])
+    polygon = shapely.geometry.Polygon([(0, 0), (1200, 100), (900, 700), (200, 800)])
     distance = 1
     mbr, i, v_x = new_coordsys(polygon)
     #print('input',mbr.exterior.coords[i], v_x)

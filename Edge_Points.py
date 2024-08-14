@@ -7,10 +7,10 @@ Autor: Kaiyu Qian
 from Trapezia import trapezia
 from New_Coordsys import new_coordsys
 from Tri_Pattern import tri_pattern
-def edge_points(polygon_out, polygon_in, distance):
-    '''input format: polygon_out = class Polygon,
-                     polygon_in = class Polygon,
-                     distance = value,
+def edge_points(polygon_out, polygon_in, distance: float):
+    '''input format: polygon_out = class Polygon, the original field polygon
+                     polygon_in = class Polygon, the field polygon after cutting off the boundary area
+                     distance = value, the size of every two adjacent seeds
     '''
     # Enable boundary mode
     edge = True
@@ -19,10 +19,10 @@ def edge_points(polygon_out, polygon_in, distance):
     # Traverse each boundary region and merge points
     for trapezoid in trapezoids:
         mbr, origin, x_v = new_coordsys(trapezoid, edge)
-        multipoints = tri_pattern(mbr, origin, x_v, trapezoid, distance)
+        seeds = tri_pattern(mbr, origin, x_v, trapezoid, distance)
         # Merge all points
-        points += multipoints
-    '''output format: points = List of class Point, 
+        points += seeds
+    '''output format: points = List of class Point, the coordinates of the seeds calculated from the sowing
     '''
     return points
 # Test

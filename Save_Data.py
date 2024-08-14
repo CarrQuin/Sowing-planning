@@ -10,7 +10,7 @@ from pathlib import Path
 from datetime import datetime
 # Save as .csv
 def save_date_csv(points_c):
-    '''input format: points_c = List of class Point,
+    '''input format: points_c = List of class Point, the coordinates of the seeds calculated from the sowing
     '''
     # Create the file save location and define the filename
     file_path_c = Path("Koordinaten_Saatpunkte.csv")
@@ -21,11 +21,11 @@ def save_date_csv(points_c):
         # Save the coordinates of each point
         for i, point_c in enumerate(points_c, 1):
             c_writer.writerow([i, point_c.x, point_c.y])
-    '''Return the absolute path of the file, '''
+    '''Return the absolute path of the file'''
     return str(file_path_c.resolve())
 # Save as .kml
 def save_date_kml(points_k):
-    '''input format: points_k = List of class Point,
+    '''input format: points_k = List of class Point, the coordinates of the seeds calculated from the sowing
     '''
     kml = simplekml.Kml()
     # Timestamp
@@ -37,7 +37,7 @@ def save_date_kml(points_k):
     # Create the file save location and define the filename
     file_path_k = Path("Koordinaten_Saatpunkte.kml")
     kml.save(file_path_k)
-    '''Return the absolute path of the file, '''
+    '''Return the absolute path of the file'''
     return str(file_path_k.resolve())
 # Test
 if __name__ == "__main__":

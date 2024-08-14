@@ -34,17 +34,16 @@ outside_polygon, inside_polygon = new_edge(coords, edge_width)
 test1_time = time.time()# T1 trans to <<<
 # Arrange seeds within the interior area
 if optimal:
-    multipoints = opt_pattern(inside_polygon, distance, move_iter, angle_iter)
+    points_center = opt_pattern(inside_polygon, distance, move_iter, angle_iter)
 else:
     mbr, index, x_v = new_coordsys(inside_polygon)
-    multipoints = tri_pattern(mbr, index, x_v, inside_polygon, distance)
+    points_center = tri_pattern(mbr, index, x_v, inside_polygon, distance)
 # Arrange seeds along the boundaries
 points_edge = edge_points(outside_polygon, inside_polygon, distance)
 # Convert to geographic coordinates and save
-points_all = multipoints + points_edge
 test2_time = time.time()# T2 pattern <<<
-points_geo = utm_to_geo_points(points_all, utm_zone)
-print('The new total points:', len(points_all))
+points_geo = utm_to_geo_points(points_center + points_edge, utm_zone)
+print('The new total points:', len(points_geo))
 test3_time = time.time()# T3 transform back <<<
 if save_as_csv:
     print(save_date_csv(points_geo))
@@ -65,8 +64,8 @@ if __name__ == '__main__':
     plt.figure(pathlib.Path(kml_file_path).stem)
     plt.plot(*outside_polygon.exterior.xy)
     plt.plot(*inside_polygon.exterior.xy)
-    x_coords = [point.x for point in points_all]
-    y_coords = [point.y for point in points_all]
+    x_coords = [point.x for point in points_center + points_edge]
+    y_coords = [point.y for point in points_center + points_edge]
     plt.scatter(x_coords, y_coords, color='red')
     plt.title(pathlib.Path(kml_file_path).name)
     plt.grid()

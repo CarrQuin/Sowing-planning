@@ -4,11 +4,10 @@ Description: Shrink the polygon by a certain boundary distance
 E-mail: k.qian@tu-braunschweig.de
 Autor: Kaiyu Qian
 '''
-import numpy as np
 import shapely
-def new_edge(vertices, width):
-    '''input format: vertices = List, the outside boundary
-                     distance = value, size of every two adjacent points
+def new_edge(vertices, width: float):
+    '''input format: vertices = List, the boundary vertices of the field
+                     width = value, the width of the boundary area
     '''    
     polygon_out = shapely.geometry.Polygon(vertices)
     # Use buffer function to shrink the polygon
@@ -16,8 +15,8 @@ def new_edge(vertices, width):
     # Ensure that all vertices are stored in a ccw order
     polygon_out = shapely.geometry.polygon.orient(polygon_out)
     polygon_in = shapely.geometry.polygon.orient(polygon_in)
-    '''output format: polygon_out = class Polygon, outside
-                      polygon_in = class Polygon, inside
+    '''output format: polygon_out = class Polygon, the original field polygon
+                      polygon_in = class Polygon, the field polygon after cutting off the boundary area
     '''
     return polygon_out, polygon_in
 

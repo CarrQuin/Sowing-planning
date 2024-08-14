@@ -7,8 +7,8 @@ Autor: Kaiyu Qian
 '''
 import shapely
 def trapezia(out_polygon, in_polygon):
-    '''input: out_polygon = class Polygon,
-              in_polygon = class Polygon,
+    '''input: out_polygon = class Polygon, the original field polygon
+              in_polygon = class Polygon, the field polygon after cutting off the boundary area
     '''
     # Determine if two polygons have the same orientation
     if in_polygon.exterior.is_ccw == out_polygon.exterior.is_ccw is False:
@@ -29,7 +29,7 @@ def trapezia(out_polygon, in_polygon):
         element.append(inside[i])
         # Save all trapezoids into a list
         trapezia.append(shapely.geometry.Polygon(element))
-    '''output format: trapezia = List of class Polygons, '''
+    '''output format: trapezia = List of class Polygons, the trapezoids after splitting the boundary area'''
     return trapezia
 # Test
 if __name__ == "__main__":

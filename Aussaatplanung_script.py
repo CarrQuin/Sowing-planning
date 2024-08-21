@@ -13,39 +13,29 @@ from Save_Data import save_date_kml, save_date_csv
 from coords_kml import extract_coordinates_kml
 from coords_transformation import utm_to_geo_points, geo_to_utm, get_utm_zone
 import time
-import configparser
-# =====Variables=====
-config = configparser.ConfigParser()
-config.read('config.ini')
-kml_file_path = config.get('path', 'kml_file_path')
-save_as_csv = config.getboolean('settings', 'save_as_csv')
-distance = config.getfloat('variables', 'distance')
-edge_width = config.getfloat('variables', 'edge_width')
-optimal = config.getboolean('settings', 'optimal')
-move_iter = config.getint('variables', 'move_iter')
-angle_iter = config.getint('variables', 'angle_iter')
+import config as cf
 # =====main=====
 # Abstract geometric information from geographic coordinates
 start_time = time.time()# T0 start <<<
-coords_geo = extract_coordinates_kml(kml_file_path)
+coords_geo = extract_coordinates_kml(cf.kml_file_path)
 utm_zone = get_utm_zone(coords_geo)
 coords = geo_to_utm(coords_geo, utm_zone)
-outside_polygon, inside_polygon = new_edge(coords, edge_width)
+outside_polygon, inside_polygon = new_edge(coords, cf.edge_width)
 test1_time = time.time()# T1 trans to <<<
 # Arrange seeds within the interior area
-if optimal:
-    points_center = opt_pattern(inside_polygon, distance, move_iter, angle_iter)
+if cf.optimal:
+    points_center = opt_pattern(inside_polygon, cf.distance, cf.move_iter, cf.angle_iter)
 else:
     mbr, index, x_v = new_coordsys(inside_polygon)
-    points_center = tri_pattern(mbr, index, x_v, inside_polygon, distance)
+    points_center = tri_pattern(mbr, index, x_v, inside_polygon, cf.distance)
 # Arrange seeds along the boundaries
-points_edge = edge_points(outside_polygon, inside_polygon, distance)
+points_edge = edge_points(outside_polygon, inside_polygon, cf.distance)
 # Convert to geographic coordinates and save
 test2_time = time.time()# T2 pattern <<<
 points_geo = utm_to_geo_points(points_center + points_edge, utm_zone)
 print('The new total points:', len(points_geo))
 test3_time = time.time()# T3 transform back <<<
-if save_as_csv:
+if cf.save_as_csv:
     print(save_date_csv(points_geo))
 else:
     print(save_date_kml(points_geo))
@@ -61,13 +51,13 @@ if __name__ == '__main__':
     # =====Plot=====
     import matplotlib.pyplot as plt
     import pathlib
-    plt.figure(pathlib.Path(kml_file_path).stem)
+    plt.figure(pathlib.Path(cf.kml_file_path).stem)
     plt.plot(*outside_polygon.exterior.xy)
     plt.plot(*inside_polygon.exterior.xy)
     x_coords = [point.x for point in points_center + points_edge]
     y_coords = [point.y for point in points_center + points_edge]
     plt.scatter(x_coords, y_coords, color='red')
-    plt.title(pathlib.Path(kml_file_path).name)
+    plt.title(pathlib.Path(cf.kml_file_path).name)
     plt.grid()
     plt.axis('equal')
     plt.show()

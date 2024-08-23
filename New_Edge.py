@@ -21,8 +21,8 @@ def new_edge(vertices, width: float):
     return polygon_out, polygon_in
 
 # Test
-import matplotlib.pyplot as plt
 if __name__ == '__main__':
+    import matplotlib.pyplot as plt
     # Set the vertex coordinates of the polygon and the boundary distance
     vertices = [(0, 0), (1, 10), (5, 17), (8, 7), (13, 3)]
     width = 0.1

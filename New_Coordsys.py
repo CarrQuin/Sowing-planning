@@ -51,14 +51,18 @@ def new_coordsys(polygon, edge=False):
 if __name__ == '__main__':
     from shapely.geometry import Polygon
     import matplotlib.pyplot as plt
-    polygon = Polygon([(10, -60), (60, -80), (50, 90), (20, 130), (-5, 40)])
+    polygon = Polygon([(1, -6), (6, -8), (7.5, 1.5), (5, 9), (2, 13), (0, 4)])
     mbr, point, x_vecc = new_coordsys(polygon)
     print('mbr:', mbr)
     print('origin:', point)
     print('x direction:', x_vecc)
     plt.figure('new_coordsys')
     plt.plot(*polygon.exterior.xy)
-    plt.plot(*mbr.exterior.xy)
+    plt.fill(*polygon.exterior.xy, facecolor='lightblue', label='polygon')
+    plt.plot(*mbr.exterior.xy, color='green', label='mbr')
+    plt.quiver(*list(mbr.exterior.coords)[point], *x_vecc, scale=15, color='red', label='x-axis')
+    plt.title('mbr of polygon and x-axis of pattern')
+    plt.legend()
     plt.grid()
     plt.axis('equal')
     plt.show()

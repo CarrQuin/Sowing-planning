@@ -25,7 +25,7 @@ if __name__ == '__main__':
     import matplotlib.pyplot as plt
     # Set the vertex coordinates of the polygon and the boundary distance
     vertices = [(0, 0), (1, 10), (5, 17), (8, 7), (13, 3)]
-    width = 0.1
+    width = 1
     # Create a polygon
     polygon_outside, polygon_inside = new_edge(vertices, width)
     # Coordinates of the new polygon
@@ -36,10 +36,13 @@ if __name__ == '__main__':
     # Create a plot
     plt.figure('New edge')
     plt.plot(*polygon_outside.exterior.xy)
-    plt.plot(*polygon_inside.exterior.xy)
+    plt.fill(*polygon_outside.exterior.xy, facecolor='lightcoral', label='original field')
+    plt.plot(*polygon_inside.exterior.xy, color='blue')
+    plt.fill(*polygon_inside.exterior.xy, facecolor='lightblue', label='shrunk field')
     plt.title('Origin and New polygon')
     plt.xlabel('X coordinate')
     plt.ylabel('Y coordinate')
+    plt.legend()
     plt.grid()
     plt.axis('equal')
     plt.show()

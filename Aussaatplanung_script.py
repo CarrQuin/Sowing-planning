@@ -26,8 +26,7 @@ test1_time = time.time()# T1 trans to <<<
 if cf.optimal:
     points_center = opt_pattern(inside_polygon, cf.distance, cf.move_iter, cf.angle_iter)
 else:
-    mbr, index, x_v = new_coordsys(inside_polygon)
-    points_center = tri_pattern(mbr, index, x_v, inside_polygon, cf.distance)
+    points_center = tri_pattern(*new_coordsys(inside_polygon), inside_polygon, cf.distance)
 # Arrange seeds along the boundaries
 points_edge = edge_points(outside_polygon, inside_polygon, cf.distance)
 # Convert to geographic coordinates and save
@@ -51,7 +50,15 @@ if __name__ == '__main__':
     # =====Plot=====
     import matplotlib.pyplot as plt
     import pathlib
+    import shapely
     plt.figure(pathlib.Path(cf.kml_file_path).stem)
+    # -----Geo-----
+    # polygon_geo = shapely.geometry.Polygon(coords_geo)
+    # plt.plot(*polygon_geo.exterior.xy)
+    # x_coords = [point_geo.x for point_geo in points_geo]
+    # y_coords = [point_geo.y for point_geo in points_geo]
+    # plt.scatter(x_coords, y_coords, color='red')
+    # -----UTM-----
     plt.plot(*outside_polygon.exterior.xy)
     plt.plot(*inside_polygon.exterior.xy)
     x_coords = [point.x for point in points_center + points_edge]

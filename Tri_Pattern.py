@@ -100,8 +100,8 @@ if __name__ == '__main__':
     import time
     import matplotlib.pyplot as plt
     from New_Coordsys import new_coordsys
-    polygon = shapely.geometry.Polygon([(0, 0), (1200, 100), (900, 700), (200, 800)])
-    distance = 1
+    polygon = shapely.geometry.Polygon([(0, 0), (120, 10), (90, 70), (20, 80)])
+    distance = 10
     mbr, i, v_x = new_coordsys(polygon)
     #print('input',mbr.exterior.coords[i], v_x)
     start_time = time.time()
@@ -110,7 +110,7 @@ if __name__ == '__main__':
     print(f'Elapsed time new2: {end_time - start_time} seconds')
     print('The total number of points2:', len(points))
     # Create a plot
-    plt.figure('Pattern1')
+    plt.figure('pattern')
     plt.plot(*polygon.exterior.xy)
     x_coords = [point.x for point in points]
     y_coords = [point.y for point in points]

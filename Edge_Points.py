@@ -18,8 +18,7 @@ def edge_points(polygon_out, polygon_in, distance: float):
     points = []
     # Traverse each boundary region and merge points
     for trapezoid in trapezoids:
-        mbr, origin, x_v = new_coordsys(trapezoid, edge)
-        seeds = tri_pattern(mbr, origin, x_v, trapezoid, distance)
+        seeds = tri_pattern(*new_coordsys(trapezoid, edge), trapezoid, distance)
         # Merge all points
         points += seeds
     '''output format: points = List of class Point, the coordinates of the seeds calculated from the sowing
@@ -32,22 +31,21 @@ if __name__ == '__main__':
     from coords_transformation import geo_to_utm, get_utm_zone
     from New_Edge import new_edge
     kml_file_path = r"KML-Dateien\test.kml"
-    distance = 0.35
-    width = 1.8
+    distance = 10
+    width = 20
     coords_geo = extract_coordinates_kml(kml_file_path)
     utm_zone = get_utm_zone(coords_geo)
     coords = geo_to_utm(coords_geo, utm_zone)
-    #coords = [(0, 0), (120, 10), (90, 70), (20, 80)]
+    coords = [(0, 0), (120, 10), (90, 70), (20, 80)]
     polygon_out, polygon_in = new_edge(coords, width)
     points = edge_points(polygon_out, polygon_in, distance)
     # Create a plot
-    plt.figure('Pattern2')
+    plt.figure('Edge')
     plt.plot(*polygon_out.exterior.xy)
     plt.plot(*polygon_in.exterior.xy)
-    x_coords = [point.x for point in points]
-    y_coords = [point.y for point in points]
-    plt.scatter(x_coords, y_coords, color='red')
-    plt.title('Edge')
+    for point in points:
+        plt.scatter(*point.xy, color='red')
+    plt.title('Edge pattern')
     plt.grid()
     plt.axis('equal')
     plt.show()

@@ -79,7 +79,7 @@ if __name__ == "__main__":
     import time
     import matplotlib.pyplot as plt
     polygon = shapely.geometry.Polygon([(0, 0), (120, 10), (90, 70), (20, 80)])
-    distance = 1
+    distance = 10
     start_time1 = time.time()
     points = opt_pattern(polygon, distance,10,6)
     end_time1 = time.time()
@@ -91,8 +91,8 @@ if __name__ == "__main__":
     x_coords = [point.x for point in points]
     y_coords = [point.y for point in points]
     plt.scatter(x_coords, y_coords, color='red')
-    plt.title('Equilateral triangle pattern')
-    plt.legend()
+    plt.title('Optimized triangle pattern')
+    #plt.legend()
     plt.grid()
     plt.axis('equal')
     plt.show()

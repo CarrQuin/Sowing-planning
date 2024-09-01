@@ -3,7 +3,7 @@ Description: All necessary input variables.
 E-mail: k.qian@tu-braunschweig.de
 Autor: Kaiyu Qian
 '''
-
+import numpy as np
 # File path to read.
 kml_file_path = r'KML-Dateien\feld 1.kml'
 
@@ -16,7 +16,7 @@ optimal = False
 distance = 3.5
 # Width of the boundary region, in[m]
 # !Notes!: If the boundary is too wide, it may cause errors.
-edge_width = 18.2
+edge_width = 3*np.sqrt(3)*distance
 # (OPT)Number of steps optimization iterations.(Up to a max. of 100.)
 # CANNOT BE ZERO
 move_iter = 5

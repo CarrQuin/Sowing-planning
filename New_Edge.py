@@ -23,16 +23,20 @@ def new_edge(vertices, width: float):
 # Test
 if __name__ == '__main__':
     import matplotlib.pyplot as plt
+    import coords_kml, coords_transformation
     # Set the vertex coordinates of the polygon and the boundary distance
-    vertices = [(0, 0), (1, 10), (5, 17), (8, 7), (13, 3)]
-    width = 1
+    coords_geo = coords_kml.extract_coordinates_kml(r'KML-Dateien\feld 3.kml')
+    utm_zone = coords_transformation.get_utm_zone(coords_geo)
+    vertices = coords_transformation.geo_to_utm(coords_geo, utm_zone)
+    # vertices = [(0, 0), (1, 10), (5, 17), (8, 7), (13, 3)]
+    width = 10
     # Create a polygon
     polygon_outside, polygon_inside = new_edge(vertices, width)
     # Coordinates of the new polygon
-    for poly_out in polygon_outside.exterior.coords[:-1]:
-        print(poly_out)
-    for poly_in in polygon_inside.exterior.coords[:-1]:
-        print(poly_in)
+    # for poly_out in polygon_outside.exterior.coords[:-1]:
+    #     print(poly_out)
+    # for poly_in in polygon_inside.exterior.coords[:-1]:
+    #     print(poly_in)
     # Create a plot
     plt.figure('New edge')
     plt.plot(*polygon_outside.exterior.xy)

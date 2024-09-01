@@ -37,21 +37,21 @@ if __name__ == "__main__":
     from New_Edge import new_edge
     from coords_kml import extract_coordinates_kml
     from coords_transformation import geo_to_utm, get_utm_zone
-    kml_file_path = r"KML-Dateien\test.kml"
-    distance = 0.35
+    kml_file_path = r"KML-Dateien\Feld 3.kml"
+    distance = 12
     #coords = [(0, 0), (1200, 100), (900, 700), (200, 800)]
     coords_geo = extract_coordinates_kml(kml_file_path)
     utm_zone = get_utm_zone(coords_geo)
     coords = geo_to_utm(coords_geo, utm_zone)
     polygon_out, polygon_in = new_edge(coords, distance)
     trapezoids = trapezia(polygon_out, polygon_in)
-    print(polygon_out,'\n', polygon_in)
+    # print(polygon_out,'\n', polygon_in)
     # Create a plot
     plt.figure('trapezia')
     for trapezoid in trapezoids:
         plt.plot(*trapezoid.exterior.xy)
     plt.xlabel('X coordinate')
     plt.ylabel('Y coordinate')
-    plt.grid()
+    # plt.grid()
     plt.axis('equal')
     plt.show()

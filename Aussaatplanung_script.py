@@ -16,12 +16,11 @@ import time
 import config as cf
 # =====main=====
 # Abstract geometric information from geographic coordinates
-start_time = time.time()# T0 start <<<
 coords_geo = extract_coordinates_kml(cf.kml_file_path)
 utm_zone = get_utm_zone(coords_geo)
 coords = geo_to_utm(coords_geo, utm_zone)
 outside_polygon, inside_polygon = new_edge(coords, cf.edge_width)
-test1_time = time.time()# T1 trans to <<<
+start_time = time.time()# T0 start <<<
 # Arrange seeds within the interior area
 if cf.optimal:
     points_center = opt_pattern(inside_polygon, cf.distance, cf.move_iter, cf.angle_iter)
@@ -30,23 +29,22 @@ else:
 # Arrange seeds along the boundaries
 points_edge = edge_points(outside_polygon, inside_polygon, cf.distance)
 # Convert to geographic coordinates and save
-test2_time = time.time()# T2 pattern <<<
+test1_time = time.time()# T1 pattern <<<
 points_geo = utm_to_geo_points(points_center + points_edge, utm_zone)
-print('The new total points:', len(points_geo))
-test3_time = time.time()# T3 transform back <<<
+test2_time = time.time()# T2 transform back <<<
 if cf.save_as_csv:
     print(save_date_csv(points_geo))
 else:
     print(save_date_kml(points_geo))
-end_time = time.time()# T4 end <<<
+end_time = time.time()# T3 end <<<
 # Test
 if __name__ == '__main__':
     # =====Elapsed Time=====
-    print(f'new_Transto-time: {test1_time - start_time} seconds')
-    print(f'new_Pattern-time: {test2_time - test1_time} seconds')
-    print(f'new_transback-time: {test3_time - test2_time} seconds')
-    print(f'new_savedate-time: {end_time - test3_time} seconds')
-    print(f'new_Fulltime: {end_time - start_time} seconds')
+    print('The total number of seeds(v2):', len(points_geo))
+    print(f'v2_Patterning-time: {test1_time - start_time} seconds')
+    print(f'v2_Transformation-time: {test2_time - test1_time} seconds')
+    print(f'v2_Data-saving-time: {end_time - test2_time} seconds')
+    print(f'v2_Fulltime: {end_time - start_time} seconds')
     # =====Plot=====
     import matplotlib.pyplot as plt
     import pathlib
@@ -60,7 +58,7 @@ if __name__ == '__main__':
     # plt.scatter(x_coords, y_coords, color='red')
     # -----UTM-----
     plt.plot(*outside_polygon.exterior.xy)
-    plt.plot(*inside_polygon.exterior.xy)
+    plt.plot(*inside_polygon.exterior.xy, '--')
     x_coords = [point.x for point in points_center + points_edge]
     y_coords = [point.y for point in points_center + points_edge]
     plt.scatter(x_coords, y_coords, color='red')

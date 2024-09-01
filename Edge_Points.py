@@ -31,7 +31,7 @@ if __name__ == '__main__':
     from coords_transformation import geo_to_utm, get_utm_zone
     from New_Edge import new_edge
     kml_file_path = r"KML-Dateien\test.kml"
-    distance = 10
+    distance = 8
     width = 20
     coords_geo = extract_coordinates_kml(kml_file_path)
     utm_zone = get_utm_zone(coords_geo)

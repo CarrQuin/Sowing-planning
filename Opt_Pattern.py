@@ -24,6 +24,8 @@ def opt_pattern(polygon, distance: float, opt_move: int=1, opt_angle: int=1):
     min_y = centroid.y - radius
     max_y = centroid.y + (radius + 2 * triangle_height)
     # Lay out an even regular triangular grid.
+    j = 0
+    j_max = ((2*(radius+2*triangle_height))//triangle_height)
     points = []
     y = min_y
     even_row = True
@@ -38,6 +40,8 @@ def opt_pattern(polygon, distance: float, opt_move: int=1, opt_angle: int=1):
             x += distance
         even_row = not even_row
         y += triangle_height
+        j += 1
+        print(f'preparing:{round((j/j_max)*100, 2)}%', end='\r')
     points = shapely.geometry.MultiPoint(points)
     # Rotate and translate to find the optimal direction.
     i = 0
@@ -53,7 +57,7 @@ def opt_pattern(polygon, distance: float, opt_move: int=1, opt_angle: int=1):
                 angle_degrees = angle_steps*steps3
                 # Log the loop execution progress
                 i += 1
-                print('Optimization calculation in progress:', i, end='\r')
+                print('opt processing:', i, end='\r')
                 x_m = (pattern_move_x/100)*distance
                 y_m = (pattern_move_y/100)*(2*triangle_height)
                 # Translate and rotate the polygon within the grid
@@ -62,10 +66,10 @@ def opt_pattern(polygon, distance: float, opt_move: int=1, opt_angle: int=1):
                 # Calculate the number of points in the shape and determine if it contains more points
                 point_s = points.intersection(polygon_new)
                 if len(point_s.geoms) > len(opt_points.geoms):
-                    #print('pattern_move_x:', pattern_move_x,end=';')
-                    #print('pattern_move_y:', pattern_move_y, end=';')
-                    #print('angle_degrees:', angle_degrees)
-                    #print('intersections:', len(point_s.geoms))
+                    # print('pattern_move_x:', pattern_move_x,end=';')
+                    # print('pattern_move_y:', pattern_move_y, end=';')
+                    # print('angle_degrees:', angle_degrees)
+                    # print('intersections:', len(point_s.geoms))
                     opt_points = point_s
                     opt_steps = [x_m, y_m, angle_degrees]
     # Restore the points to the original polygon
@@ -79,7 +83,7 @@ if __name__ == "__main__":
     import time
     import matplotlib.pyplot as plt
     polygon = shapely.geometry.Polygon([(0, 0), (120, 10), (90, 70), (20, 80)])
-    distance = 10
+    distance = 0.1
     start_time1 = time.time()
     points = opt_pattern(polygon, distance,10,6)
     end_time1 = time.time()
@@ -92,7 +96,7 @@ if __name__ == "__main__":
     y_coords = [point.y for point in points]
     plt.scatter(x_coords, y_coords, color='red')
     plt.title('Optimized triangle pattern')
-    #plt.legend()
+    # plt.legend()
     plt.grid()
     plt.axis('equal')
     plt.show()

@@ -16,7 +16,7 @@ optimal = False
 distance = 3.5
 # Width of the boundary region, in[m]
 # !Notes!: If the boundary is too wide, it may cause errors.
-edge_width = 3*np.sqrt(3)*distance
+edge_width = 1.5*np.sqrt(3)*distance
 # (OPT)Number of steps optimization iterations.(Up to a max. of 100.)
 # CANNOT BE ZERO
 move_iter = 5

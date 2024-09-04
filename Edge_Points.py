@@ -42,9 +42,10 @@ if __name__ == '__main__':
     # Create a plot
     plt.figure('Edge')
     plt.plot(*polygon_out.exterior.xy)
-    plt.plot(*polygon_in.exterior.xy)
-    for point in points:
-        plt.scatter(*point.xy, color='red')
+    plt.plot(*polygon_in.exterior.xy, '--')
+    x_coords = [point.x for point in points]
+    y_coords = [point.y for point in points]
+    plt.scatter(x_coords, y_coords, color='red')
     plt.title('Edge pattern')
     plt.grid()
     plt.axis('equal')

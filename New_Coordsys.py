@@ -51,7 +51,7 @@ def new_coordsys(polygon, edge=False):
 if __name__ == '__main__':
     from shapely.geometry import Polygon
     import matplotlib.pyplot as plt
-    polygon = Polygon([(1, -6), (6, -8), (7.5, 1.5), (5, 9), (2, 13), (0, 4)])
+    polygon = Polygon([(0, 0), (120, 10), (90, 70), (20, 80)])
     mbr, point, x_vecc = new_coordsys(polygon)
     print('mbr:', mbr)
     print('origin:', point)

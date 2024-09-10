@@ -57,12 +57,12 @@ if __name__ == '__main__':
     # y_coords = [point_geo.y for point_geo in points_geo]
     # plt.scatter(x_coords, y_coords, color='red')
     # -----UTM-----
-    plt.plot(*outside_polygon.exterior.xy)
-    plt.plot(*inside_polygon.exterior.xy, '--')
-    x_coords = [point.x for point in points_center + points_edge]
-    y_coords = [point.y for point in points_center + points_edge]
-    plt.scatter(x_coords, y_coords, color='red')
-    plt.title(pathlib.Path(cf.kml_file_path).name)
-    plt.grid()
-    plt.axis('equal')
-    plt.show()
+    # plt.plot(*outside_polygon.exterior.xy)
+    # plt.plot(*inside_polygon.exterior.xy, '--')
+    # x_coords = [point.x for point in points_center + points_edge]
+    # y_coords = [point.y for point in points_center + points_edge]
+    # plt.scatter(x_coords, y_coords, color='red')
+    # plt.title(pathlib.Path(cf.kml_file_path).name)
+    # plt.grid()
+    # plt.axis('equal')
+    # plt.show()
